@@ -10,6 +10,6 @@ interface MainView {
     fun hideLoading()
     fun onAlert(message: String, title: String)
     fun onError(error: String)
-    fun onResult(data: List<Teams>)
+    fun onResult(data: List<Teams>?)
 
 }

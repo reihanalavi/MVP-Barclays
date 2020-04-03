@@ -8,12 +8,15 @@ import com.reihanalavi.mvpbarclays.views.MainView
 import com.reihanalavi.mvpbarclays.webservices.ApiRepository
 import com.reihanalavi.mvpbarclays.webservices.RetrofitBuilder
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
 import retrofit2.Retrofit
 
-class MainPresenter(val view: MainView, val retrofit: Retrofit, val apiRepository: ApiRepository): AnkoLogger {
+class MainPresenter(val view: MainView, var apiRepository: ApiRepository): AnkoLogger {
+
+    lateinit var compositeDisposable: CompositeDisposable
 
     @SuppressLint("CheckResult")
     fun getTeams(league: String) {

@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 
 data class TeamsResponse(
     @SerializedName("teams")
-    val teams: List<Teams>
+    val teams: List<Teams>?
 )

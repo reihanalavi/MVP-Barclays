@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), MainView, AnkoLogger {
 
         retrofit = RetrofitBuilder.getRetrofit()
         apiRepository = retrofit.create(ApiRepository::class.java)
-        presenter = MainPresenter(this, retrofit, apiRepository)
+        presenter = MainPresenter(this, apiRepository)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = TeamsAdapter(this, teams) {
@@ -73,10 +73,11 @@ class MainActivity : AppCompatActivity(), MainView, AnkoLogger {
         debug { error }
     }
 
-    override fun onResult(data: List<Teams>) {
+    override fun onResult(data: List<Teams>?) {
         swipeRefresh.isRefreshing = false
         teams.clear()
-        teams.addAll(data)
+        data?.let { teams.addAll(it) }
+        Log.d("SIZE GAIS SIZE", data?.size.toString())
         adapter.notifyDataSetChanged()
     }
 }
