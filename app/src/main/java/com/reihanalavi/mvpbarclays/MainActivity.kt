@@ -2,21 +2,30 @@ package com.reihanalavi.mvpbarclays
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.reihanalavi.mvpbarclays.adapters.TeamsAdapter
 import com.reihanalavi.mvpbarclays.models.Teams
+import com.reihanalavi.mvpbarclays.models.TeamsResponse
 import com.reihanalavi.mvpbarclays.presenters.MainPresenter
 import com.reihanalavi.mvpbarclays.views.MainView
+import com.reihanalavi.mvpbarclays.webservices.ApiRepository
+import com.reihanalavi.mvpbarclays.webservices.RetrofitBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.debug
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.toast
+import retrofit2.Retrofit
 
 class MainActivity : AppCompatActivity(), MainView, AnkoLogger {
 
-    lateinit var league: String
+    var teams: MutableList<Teams> = mutableListOf()
+
+    lateinit var retrofit: Retrofit
+    lateinit var apiRepository: ApiRepository
+
     lateinit var presenter: MainPresenter
     lateinit var adapter: TeamsAdapter
 
@@ -24,19 +33,26 @@ class MainActivity : AppCompatActivity(), MainView, AnkoLogger {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        presenter = MainPresenter(this)
+        retrofit = RetrofitBuilder.getRetrofit()
+        apiRepository = retrofit.create(ApiRepository::class.java)
+        presenter = MainPresenter(this, retrofit, apiRepository)
 
-        adapter = TeamsAdapter(this) {
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = TeamsAdapter(this, teams) {
 
         }
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter.notifyDataSetChanged()
         recyclerView.adapter = adapter
 
+        val league = "English Premier League"
+        val leagueFinal = league.replace(" ", "%20")
+        Log.d("QUERY GAIS", leagueFinal)
+
         swipeRefresh.onRefresh {
-            presenter.getTeams("English Premier League")
+            presenter.getTeams(leagueFinal)
         }
 
-        presenter.getTeams("English Premier League")
+        presenter.getTeams(leagueFinal)
     }
 
     override fun showLoading() {
@@ -57,9 +73,10 @@ class MainActivity : AppCompatActivity(), MainView, AnkoLogger {
         debug { error }
     }
 
-    override fun onResult(data: ArrayList<Teams>) {
+    override fun onResult(data: List<Teams>) {
         swipeRefresh.isRefreshing = false
-        adapter.teams = data
+        teams.clear()
+        teams.addAll(data)
         adapter.notifyDataSetChanged()
     }
 }
