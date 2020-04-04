@@ -11,4 +11,7 @@ interface ApiRepository {
     @GET("api/v1/json/1/search_all_teams.php")
     fun getTeams(@Query ("l") league: String): Observable<TeamsResponse>
 
+    @GET("api/v1/json/1/lookupteam.php")
+    fun getTeamDetails(@Query ("id") idTeam: String): Observable<TeamsResponse>
+
 }

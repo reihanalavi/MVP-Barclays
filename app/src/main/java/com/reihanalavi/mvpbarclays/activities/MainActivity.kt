@@ -1,12 +1,12 @@
-package com.reihanalavi.mvpbarclays
+package com.reihanalavi.mvpbarclays.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.reihanalavi.mvpbarclays.R
 import com.reihanalavi.mvpbarclays.adapters.TeamsAdapter
 import com.reihanalavi.mvpbarclays.models.Teams
-import com.reihanalavi.mvpbarclays.models.TeamsResponse
 import com.reihanalavi.mvpbarclays.presenters.MainPresenter
 import com.reihanalavi.mvpbarclays.views.MainView
 import com.reihanalavi.mvpbarclays.webservices.ApiRepository
@@ -14,7 +14,7 @@ import com.reihanalavi.mvpbarclays.webservices.RetrofitBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.alert
-import org.jetbrains.anko.debug
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.toast
 import retrofit2.Retrofit
@@ -39,20 +39,19 @@ class MainActivity : AppCompatActivity(), MainView, AnkoLogger {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = TeamsAdapter(this, teams) {
-
+            startActivity<DetailActivity>("id" to it.idTeam)
         }
         adapter.notifyDataSetChanged()
         recyclerView.adapter = adapter
 
         val league = "English Premier League"
-        val leagueFinal = league.replace(" ", "%20")
-        Log.d("QUERY GAIS", leagueFinal)
+        Log.d("QUERY GAIS", league)
 
         swipeRefresh.onRefresh {
-            presenter.getTeams(leagueFinal)
+            presenter.getTeams(league)
         }
 
-        presenter.getTeams(leagueFinal)
+        presenter.getTeams(league)
     }
 
     override fun showLoading() {
@@ -70,14 +69,19 @@ class MainActivity : AppCompatActivity(), MainView, AnkoLogger {
     }
 
     override fun onError(error: String) {
-        debug { error }
+        Log.d("ON ERROR GAIS", error)
     }
 
     override fun onResult(data: List<Teams>?) {
         swipeRefresh.isRefreshing = false
         teams.clear()
-        data?.let { teams.addAll(it) }
-        Log.d("SIZE GAIS SIZE", data?.size.toString())
+//        data?.let { teams.addAll(it) }
+        if (data != null) {
+            teams.addAll(data)
+        } else {
+            toast("Kosong")
+        }
+        Log.d("SIZE TEAMS GAIS", teams.size.toString())
         adapter.notifyDataSetChanged()
     }
 }

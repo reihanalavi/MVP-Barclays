@@ -11,7 +11,7 @@ import com.reihanalavi.mvpbarclays.models.Teams
 import kotlinx.android.synthetic.main.items_teams.view.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
-class TeamsAdapter(val context: Context, val teams: List<Teams>, val listener: (Teams) -> Unit) :
+class TeamsAdapter(private val context: Context, private var teams: List<Teams>, private val listener: (Teams) -> Unit) :
     RecyclerView.Adapter<TeamsAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View?): RecyclerView.ViewHolder(itemView!!) {
@@ -38,7 +38,7 @@ class TeamsAdapter(val context: Context, val teams: List<Teams>, val listener: (
     override fun getItemCount(): Int = teams.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindData(teams?.get(position)!!, listener)
+        holder.bindData(teams[position], listener)
     }
 
 }
