@@ -1,6 +1,5 @@
 package com.reihanalavi.mvpbarclays.models
 
-import Team
 import com.google.gson.annotations.SerializedName
 
 data class TeamsResponse(

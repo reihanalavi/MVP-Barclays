@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), MainView, AnkoLogger {
 
         retrofit = RetrofitBuilder.getRetrofit()
         apiRepository = retrofit.create(ApiRepository::class.java)
-        presenter = MainPresenter(this, apiRepository)
+        presenter = MainPresenter(this, apiRepository, application)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = TeamsAdapter(this, teams) {
@@ -48,10 +48,10 @@ class MainActivity : AppCompatActivity(), MainView, AnkoLogger {
         Log.d("QUERY GAIS", league)
 
         swipeRefresh.onRefresh {
-            presenter.getTeams(league)
+            presenter.refreshCache(league)
         }
 
-        presenter.getTeams(league)
+        presenter.refresh(league)
     }
 
     override fun showLoading() {
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity(), MainView, AnkoLogger {
     override fun onAlert(message: String, title: String) {
         alert(message, title){
             positiveButton("OK") {}
-        }
+        }.show()
     }
 
     override fun onError(error: String) {
