@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MVP Barclays</string>
     <string name="team_description">Team Description</string>
+    <string name="team_jersey">Team Jersey</string>
 </resources>

@@ -5,34 +5,35 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.reihanalavi.mvpbarclays.R
+import com.reihanalavi.mvpbarclays.databinding.ItemsTeamsBinding
 import com.reihanalavi.mvpbarclays.models.Teams
+import com.reihanalavi.mvpbarclays.utils.AdapterListener
 import kotlinx.android.synthetic.main.items_teams.view.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class TeamsAdapter(private val context: Context, private var teams: List<Teams>, private val listener: (Teams) -> Unit) :
     RecyclerView.Adapter<TeamsAdapter.ViewHolder>() {
 
-    class ViewHolder(itemView: View?): RecyclerView.ViewHolder(itemView!!) {
+    class ViewHolder(val itemViews: ItemsTeamsBinding): RecyclerView.ViewHolder(itemViews.root) {
 
         @SuppressLint("SetTextI18n")
         fun bindData(data: Teams, listener: (Teams) -> Unit) {
-
-            itemView.items_teams_name.text = "${data.strTeamShort} - ${data.strTeam}"
-            itemView.items_teams_stadium.text = data.strStadium
+            itemViews.teams = data
 
             itemView.onClick {
                 listener(data)
             }
-
         }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.items_teams, parent, false)
-        return ViewHolder(view)
+        val inflater = LayoutInflater.from(context)
+        val views = DataBindingUtil.inflate<ItemsTeamsBinding>(inflater, R.layout.items_teams, parent, false)
+        return ViewHolder(views)
     }
 
     override fun getItemCount(): Int = teams.size

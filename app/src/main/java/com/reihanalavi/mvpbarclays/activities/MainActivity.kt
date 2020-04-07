@@ -39,7 +39,19 @@ class MainActivity : AppCompatActivity(), MainView, AnkoLogger {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = TeamsAdapter(this, teams) {
-            startActivity<DetailActivity>("id" to it.idTeam)
+            Log.d("UID DATABASE ITEM", it.uid.toString())
+
+            startActivity<DetailActivity>("isLocal" to true, "id" to it.uid)
+//            if(it.uid.toString() != null) {
+//                //it is local
+//                startActivity<DetailActivity>("isLocal" to true, "id" to it.uid.toString())
+//            } else {
+//                //it is from the server
+//                startActivity<DetailActivity>("isLocal" to false,
+//                    "stadiumThumb" to it.strStadiumThumb, "stadiumName" to it.strStadium,
+//                    "stadiumLoc" to it.strStadiumLocation, "teamBadge" to it.strTeamBadge,
+//                    "teamDesc" to it.strDescriptionEN, "teamJersey" to it.strTeamJersey)
+//            }
         }
         adapter.notifyDataSetChanged()
         recyclerView.adapter = adapter
@@ -70,12 +82,13 @@ class MainActivity : AppCompatActivity(), MainView, AnkoLogger {
 
     override fun onError(error: String) {
         Log.d("ON ERROR GAIS", error)
+        presenter.getTeamsFromDatabase()
     }
 
     override fun onResult(data: List<Teams>?) {
         swipeRefresh.isRefreshing = false
         teams.clear()
-//        data?.let { teams.addAll(it) }
+
         if (data != null) {
             teams.addAll(data)
         } else {

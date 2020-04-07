@@ -1,6 +1,7 @@
 package com.reihanalavi.mvpbarclays.presenters
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.reihanalavi.mvpbarclays.models.Teams
 import com.reihanalavi.mvpbarclays.room.BaseViewModel
@@ -32,7 +33,7 @@ class MainPresenter(val view: MainView, var apiRepository: ApiRepository, applic
         if(updateTime != null && updateTime != 0L) {
             if(System.nanoTime() - updateTime < refreshTime) {
                 //fetch local
-                getTeamsFromDatabase(league)
+                getTeamsFromDatabase()
             } else {
                 //fetch server
                 getTeamsFromServer(league)
@@ -44,7 +45,7 @@ class MainPresenter(val view: MainView, var apiRepository: ApiRepository, applic
         getTeamsFromServer(league)
     }
 
-    fun getTeamsFromDatabase(league: String) {
+    fun getTeamsFromDatabase() {
         view.showLoading()
 
         launch {
@@ -91,13 +92,16 @@ class MainPresenter(val view: MainView, var apiRepository: ApiRepository, applic
     private fun storeTeamsLocally(responses: List<Teams>?) {
         launch {
             val dao = TeamsDatabase(getApplication()).teamsDao()
+//            dao.getTeams()
             dao.deleteTeams()
-
             responses?.toTypedArray()?.let { dao.insertTeams(*it) }
 
             var i = 0
             while (i < responses?.size!!) {
-                responses[i].uid = i
+                val idGetAfterInsert = dao.getTeamById(responses[i].idTeam.toString())
+                responses[i].uid = idGetAfterInsert.uid
+//                responses[i].uid = i
+                Log.d("RESPONSES LOCAL UID", responses[i].uid.toString())
                 ++i
             }
             retrieveTeams(responses)

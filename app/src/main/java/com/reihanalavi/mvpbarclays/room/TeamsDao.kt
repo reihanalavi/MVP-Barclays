@@ -15,8 +15,11 @@ interface TeamsDao {
     @Query("SELECT * FROM teams")
     suspend fun getTeams(): List<Teams>
 
-    @Query("SELECT * FROM teams WHERE uid = :uid")
-    suspend fun getTeam(uid: Int): Teams
+    @Query("SELECT * FROM teams WHERE uid = :idTeam")
+    suspend fun getTeamByUid(idTeam: Int): Teams
+
+    @Query("SELECT * FROM teams WHERE team_id = :idTeam")
+    suspend fun getTeamById(idTeam: String): Teams
 
     @Query("DELETE FROM teams")
     suspend fun deleteTeams()

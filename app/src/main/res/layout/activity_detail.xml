@@ -1,92 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.DetailActivity">
-    <androidx.constraintlayout.widget.ConstraintLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="teams"
+            type="com.reihanalavi.mvpbarclays.models.Teams" />
+    </data>
+
+    <ScrollView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="16dp">
-
-        <ImageView
+        android:layout_height="match_parent"
+        tools:context=".activities.DetailActivity">
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:background="@android:color/darker_gray"
-            android:id="@+id/imageView_details_stadium"
-            app:layout_constraintTop_toTopOf="parent" />
-        <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:id="@+id/cardView_teamName"
-            app:layout_constraintRight_toLeftOf="@id/cardView_badge"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintTop_toBottomOf="@id/imageView_details_stadium"
-            app:layout_constraintBottom_toBottomOf="@id/imageView_details_stadium"
-            android:layout_marginStart="16dp">
-            <androidx.constraintlayout.widget.ConstraintLayout
+            android:paddingBottom="16dp">
+
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="16dp">
-                <TextView
+                android:layout_height="300dp"
+                android:background="@android:color/darker_gray"
+                android:imageUrl="@{teams.strStadiumThumb}"
+                android:id="@+id/imageView_details_stadium"
+                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:id="@+id/cardView_teamName"
+                app:layout_constraintRight_toLeftOf="@id/cardView_badge"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintTop_toBottomOf="@id/imageView_details_stadium"
+                app:layout_constraintBottom_toBottomOf="@id/imageView_details_stadium"
+                android:layout_marginStart="16dp">
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:text="Emirates Stadium"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:id="@+id/textView_detail_stadium"
-                    android:textSize="18sp"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold"/>
-                <TextView
+                    android:layout_height="match_parent"
+                    android:padding="16dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{teams.strStadium}"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/textView_detail_stadium"
+                        android:textSize="18sp"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{teams.strStadiumLocation}"
+                        app:layout_constraintTop_toBottomOf="@id/textView_detail_stadium"
+                        android:id="@+id/textView_detail_location" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cardView_badge"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageView_details_stadium"
+                app:layout_constraintBottom_toBottomOf="@id/imageView_details_stadium"
+                android:layout_marginEnd="16dp">
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:text="Holloway, London"
-                    app:layout_constraintTop_toBottomOf="@id/textView_detail_stadium"
-                    android:id="@+id/textView_detail_location" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/cardView_badge"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView_details_stadium"
-            app:layout_constraintBottom_toBottomOf="@id/imageView_details_stadium"
-            android:layout_marginEnd="16dp">
-            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_height="match_parent"
+                    android:padding="16dp">
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        tools:background="@android:color/darker_gray"
+                        android:imageUrl="@{teams.strTeamBadge}"
+                        android:id="@+id/imageView_details_badge"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="16dp">
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    tools:background="@android:color/darker_gray"
-                    android:id="@+id/imageView_details_badge"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/cardView_badge"
+                android:layout_marginTop="10dp"
+                android:text="@string/team_description"
+                android:layout_marginStart="16dp"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:id="@+id/textView_details_descS"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView_details_descS"
+                android:text="@{teams.strDescriptionEN}"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@android:color/black"
+                android:id="@+id/textView_details_desc"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/cardView_badge"
-            android:layout_marginTop="10dp"
-            android:text="@string/team_description"
-            android:layout_marginStart="16dp"
-            android:textAllCaps="true"
-            android:textColor="@color/colorPrimary"
-            android:id="@+id/textView_details_descS"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textView_details_descS"
-            tools:text="The Emirates Stadium (known as Ashburton Grove prior to sponsorship, and as Arsenal Stadium for UEFA competitions) is a football stadium in Holloway, London, England, and the home of Arsenal. With a capacity of 60,704 it is the fourth-largest football stadium in England after Wembley Stadium, Old Trafford and Tottenham Hotspur Stadium."
-            android:layout_marginStart="16dp"
-            android:textColor="@android:color/black"
-            android:id="@+id/textView_details_desc"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView_details_desc"
+                android:layout_marginTop="10dp"
+                android:text="@string/team_jersey"
+                android:layout_marginStart="16dp"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:id="@+id/textView_details_jerseyS"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintTop_toBottomOf="@id/textView_details_jerseyS"
+                android:imageUrl="@{teams.strTeamJersey}"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@android:color/black"
+                android:id="@+id/imageView_detail_jersey"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
