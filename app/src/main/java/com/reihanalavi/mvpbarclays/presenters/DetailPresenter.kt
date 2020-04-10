@@ -15,8 +15,6 @@ import org.jetbrains.anko.AnkoLogger
 
 class DetailPresenter(val view: DetailView, var apiRepository: ApiRepository, application: Application): AnkoLogger, BaseViewModel(application) {
 
-    lateinit var compositeDisposable: CompositeDisposable
-
     fun getTeamDetailsFromDatabase(idTeam: Int) {
         view.showLoading()
 
@@ -30,35 +28,6 @@ class DetailPresenter(val view: DetailView, var apiRepository: ApiRepository, ap
 
     private fun retrieveTeam(responses: Teams) {
         view.onResult(responses)
-    }
-
-    fun getTeamDetailsFromServer(idTeam: String) {
-
-        view.showLoading()
-
-        compositeDisposable = CompositeDisposable()
-
-        compositeDisposable.add(
-            apiRepository
-                .getTeamDetails(idTeam)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(
-                    {
-
-                        view.hideLoading()
-                        it.teams?.get(0)?.let { it1 -> retrieveTeam(it1) }
-
-                    },
-                    {
-
-                        view.hideLoading()
-                        view.onError(it.message!!)
-
-                    }
-                )
-        )
-
     }
 
 }

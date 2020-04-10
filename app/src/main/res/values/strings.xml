@@ -2,4 +2,21 @@
     <string name="app_name">MVP Barclays</string>
     <string name="team_description">Team Description</string>
     <string name="team_jersey">Team Jersey</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="past_match">Past Match</string>
+    <string name="teams">Teams</string>
+    <string name="upcoming_match">Upcoming Match</string>
+    <string name="loading_error">There is an error when loading teams from the server</string>
+    <string name="load_locally">Load Locally</string>
+    <string name="title_activity_bottom_navigation">BottomNavigation</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="next_match_detail">Next Match Detail</string>
+    <string name="next_list">Next List</string>
+    <string name="past_list_detail">Past List Detail</string>
+    <string name="past_list">Past List</string>
+    <string name="x">X</string>
 </resources>

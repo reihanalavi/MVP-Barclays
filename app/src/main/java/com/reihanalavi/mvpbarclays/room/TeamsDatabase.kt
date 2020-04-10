@@ -4,12 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.reihanalavi.mvpbarclays.models.Pasts
 import com.reihanalavi.mvpbarclays.models.Teams
 
-@Database(entities = [Teams::class], version = 1)
+@Database(entities = [Teams::class, Pasts::class], version = 1)
 abstract class TeamsDatabase: RoomDatabase() {
 
     abstract fun teamsDao(): TeamsDao
+    abstract fun pastsDao(): PastsDao
 
     companion object {
 
@@ -23,7 +25,7 @@ abstract class TeamsDatabase: RoomDatabase() {
         }
 
         private fun buildDatabase(context: Context) = Room.databaseBuilder(
-            context.applicationContext,
+            context,
             TeamsDatabase::class.java,
             "teamsdatabase"
         ).build()

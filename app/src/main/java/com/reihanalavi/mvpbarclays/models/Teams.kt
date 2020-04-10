@@ -5,6 +5,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+
+data class TeamsResponse(
+    @SerializedName("teams") var teams: List<Teams>?
+)
+
 @Entity
 data class Teams (
 

@@ -3,21 +3,18 @@ package com.reihanalavi.mvpbarclays.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.reihanalavi.mvpbarclays.R
 import com.reihanalavi.mvpbarclays.databinding.ItemsTeamsBinding
 import com.reihanalavi.mvpbarclays.models.Teams
-import com.reihanalavi.mvpbarclays.utils.AdapterListener
-import kotlinx.android.synthetic.main.items_teams.view.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class TeamsAdapter(private val context: Context, private var teams: List<Teams>, private val listener: (Teams) -> Unit) :
     RecyclerView.Adapter<TeamsAdapter.ViewHolder>() {
 
-    class ViewHolder(val itemViews: ItemsTeamsBinding): RecyclerView.ViewHolder(itemViews.root) {
+    class ViewHolder(private val itemViews: ItemsTeamsBinding): RecyclerView.ViewHolder(itemViews.root) {
 
         @SuppressLint("SetTextI18n")
         fun bindData(data: Teams, listener: (Teams) -> Unit) {

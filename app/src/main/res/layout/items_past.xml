@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    
+    <data>
+        <variable
+            name="pasts"
+            type="com.reihanalavi.mvpbarclays.models.Pasts" />
+        <variable
+            name="dateparser"
+            type="com.smansara.tugasque.utils.DateParser" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{dateparser.getLongDate(pasts.dateEvent)}"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/textView_items_past_date"
+                tools:text="Wednesday, 14 May 2020"
+                android:textAlignment="center"
+                android:textAllCaps="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{pasts.intHomeScore+" - "+pasts.intAwayScore}'
+                app:layout_constraintTop_toBottomOf="@id/textView_items_past_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/textView_items_past_cross"
+                tools:text="2 - 0"
+                android:textColor="@android:color/black"
+                android:textSize="28sp"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:textAllCaps="true"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{pasts.strHomeTeam}"
+                app:layout_constraintTop_toTopOf="@id/textView_items_past_cross"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textView_items_past_cross"
+                android:id="@+id/textView_items_past_homeTeam"
+                android:layout_marginEnd="10dp"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                tools:text="Arsenal"
+                android:layout_marginTop="10dp"
+                android:textAlignment="textStart" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{pasts.strAwayTeam}"
+                app:layout_constraintTop_toTopOf="@id/textView_items_past_cross"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView_items_past_cross"
+                android:id="@+id/textView_items_past_awayTeam"
+                android:layout_marginStart="10dp"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                tools:text="Manchester United"
+                android:layout_marginTop="10dp"
+                android:textAlignment="textEnd" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

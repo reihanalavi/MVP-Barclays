@@ -21,6 +21,12 @@ interface TeamsDao {
     @Query("SELECT * FROM teams WHERE team_id = :idTeam")
     suspend fun getTeamById(idTeam: String): Teams
 
+    @Query("SELECT * FROM teams WHERE team_name = :teamName OR LOWER(team_name) = LOWER(:teamName)")
+    suspend fun getTeamsByName(teamName: String): List<Teams>
+
+    @Query("SELECT * FROM teams WHERE team_name LIKE :searchName OR LOWER(team_name) LIKE LOWER(:searchName)")
+    suspend fun searchTeamsByName(searchName: String): List<Teams>
+
     @Query("DELETE FROM teams")
     suspend fun deleteTeams()
 

@@ -1,55 +1,66 @@
 package com.reihanalavi.mvpbarclays.presenters
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
+import androidx.core.content.edit
 import com.reihanalavi.mvpbarclays.models.Teams
 import com.reihanalavi.mvpbarclays.room.BaseViewModel
-import com.reihanalavi.mvpbarclays.room.SharedPreferencesHelper
 import com.reihanalavi.mvpbarclays.room.TeamsDatabase
-import com.reihanalavi.mvpbarclays.views.MainView
+import com.reihanalavi.mvpbarclays.utils.SharedPreferencesHelper
+import com.reihanalavi.mvpbarclays.views.TeamsListView
 import com.reihanalavi.mvpbarclays.webservices.ApiRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
-import kotlin.coroutines.CoroutineContext
+import org.jetbrains.anko.defaultSharedPreferences
 
-class MainPresenter(val view: MainView, var apiRepository: ApiRepository, application: Application): AnkoLogger, BaseViewModel(application) {
+class TeamsListPresenter(val view: TeamsListView, var apiRepository: ApiRepository, application: Application, var context: Context): AnkoLogger, BaseViewModel(application) {
 
     lateinit var compositeDisposable: CompositeDisposable
 
-    private var prefHelper = SharedPreferencesHelper(getApplication())
-    private var refreshTime = 5 * 60 * 1000 * 1000 * 1000L
+    private var prefHelper = SharedPreferencesHelper(context)
+    private var refreshTime = 10 * 60 * 1000 * 1000 * 1000L
 
     fun refresh(league: String) {
         val updateTime = prefHelper.getUpdateTime()
-
-        if(updateTime != null && updateTime != 0L) {
-            if(System.nanoTime() - updateTime < refreshTime) {
-                //fetch local
-                getTeamsFromDatabase()
-            } else {
-                //fetch server
-                getTeamsFromServer(league)
-            }
+        if(updateTime != null && updateTime != 0L && System.nanoTime() - updateTime < refreshTime) {
+            getTeamsFromDatabase()
+        } else {
+            getTeamsFromServer(league, context)
         }
     }
 
     fun refreshCache(league: String) {
-        getTeamsFromServer(league)
+        getTeamsFromServer(league, context)
+    }
+
+    fun searchTeamsByNameFromDatabase(teamName: String) {
+        launch {
+            val teams = TeamsDatabase(context).teamsDao().searchTeamsByName(teamName)
+            retrieveTeams(teams)
+
+            view.hideLoading()
+        }
+    }
+
+    fun getTeamsByNameFromDatabase(teamName: String) {
+        launch {
+            val teams = TeamsDatabase(context).teamsDao().getTeamsByName(teamName)
+            retrieveTeams(teams)
+
+            view.hideLoading()
+        }
     }
 
     fun getTeamsFromDatabase() {
         view.showLoading()
 
         launch {
-            val teams = TeamsDatabase(getApplication()).teamsDao().getTeams()
+            val teams = TeamsDatabase(context).teamsDao().getTeams()
             retrieveTeams(teams)
 
             view.hideLoading()
@@ -57,7 +68,7 @@ class MainPresenter(val view: MainView, var apiRepository: ApiRepository, applic
         }
     }
 
-    fun getTeamsFromServer(league: String) {
+    fun getTeamsFromServer(league: String, context: Context) {
         view.showLoading()
 
         debug { apiRepository.getTeams(league) }
@@ -73,7 +84,7 @@ class MainPresenter(val view: MainView, var apiRepository: ApiRepository, applic
                     view.hideLoading()
                     view.onAlert("Teams retrieved from the server", "Success")
 
-                    storeTeamsLocally(it.teams)
+                    storeTeamsLocally(it.teams, context)
                 },
                 {
                     view.hideLoading()
@@ -89,9 +100,9 @@ class MainPresenter(val view: MainView, var apiRepository: ApiRepository, applic
         view.onResult(responses)
     }
 
-    private fun storeTeamsLocally(responses: List<Teams>?) {
+    private fun storeTeamsLocally(responses: List<Teams>?, context: Context) {
         launch {
-            val dao = TeamsDatabase(getApplication()).teamsDao()
+            val dao = TeamsDatabase(context).teamsDao()
 //            dao.getTeams()
             dao.deleteTeams()
             responses?.toTypedArray()?.let { dao.insertTeams(*it) }

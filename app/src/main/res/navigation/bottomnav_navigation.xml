@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomnav_navigation"
+    app:startDestination="@id/teamsListFragment">
+
+    <fragment
+        android:id="@+id/teamsListFragment"
+        android:name="com.reihanalavi.mvpbarclays.fragments.TeamsListFragment"
+        android:label="TeamsListFragment"
+        tools:layout="@layout/fragment_teams_list">
+        <action
+            android:id="@+id/teamsListToTeamsDetail"
+            app:destination="@id/teamsListDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pastListFragment"
+        android:name="com.reihanalavi.mvpbarclays.fragments.PastListFragment"
+        android:label="PastListFragment"
+        tools:layout="@layout/fragment_past_list" >
+        <action
+            android:id="@+id/pastListToPastDetail"
+            app:destination="@id/pastListDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nextListFagment"
+        android:name="com.reihanalavi.mvpbarclays.fragments.NextListFagment"
+        android:label="NextListFragment"
+        tools:layout="@layout/fragment_next_list_fagment" >
+        <action
+            android:id="@+id/nextListToNextDetail"
+            app:destination="@id/nextListDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pastListDetailFragment"
+        android:name="com.reihanalavi.mvpbarclays.fragments.PastListDetailFragment"
+        android:label="PastListDetailFragment"
+        tools:layout="@layout/fragment_past_list_detail" >
+        <action
+            android:id="@+id/pastDetailToTeamsDetail"
+            app:destination="@id/teamsListDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nextListDetailFragment"
+        android:name="com.reihanalavi.mvpbarclays.fragments.NextListDetailFragment"
+        android:label="NextListDetailFragment"
+        tools:layout="@layout/fragment_next_list_detail" >
+        <action
+            android:id="@+id/nextDetailToTeamsDetail"
+            app:destination="@id/teamsListDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teamsListDetailFragment"
+        android:name="com.reihanalavi.mvpbarclays.fragments.TeamsListDetailFragment"
+        android:label="TeamsListDetailFragment"
+        tools:layout="@layout/fragment_teams_list_detail" />
+</navigation>

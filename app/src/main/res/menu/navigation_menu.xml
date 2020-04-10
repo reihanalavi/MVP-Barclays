@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/pastListFragment"
+        android:icon="@drawable/ic_past_black_24dp"
+        android:title="@string/past_match"/>
+    <item
+        android:id="@+id/teamsListFragment"
+        android:icon="@drawable/ic_teams_black_24dp"
+        android:title="@string/teams"/>
+    <item
+        android:id="@+id/nextListFagment"
+        android:icon="@drawable/ic_next_black_24dp"
+        android:title="@string/upcoming_match"/>
+</menu>

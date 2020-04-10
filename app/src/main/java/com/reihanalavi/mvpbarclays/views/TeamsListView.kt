@@ -4,7 +4,7 @@ import android.content.Context
 import com.reihanalavi.mvpbarclays.models.Teams
 import com.reihanalavi.mvpbarclays.models.TeamsResponse
 
-interface MainView {
+interface TeamsListView {
 
     fun showLoading()
     fun hideLoading()

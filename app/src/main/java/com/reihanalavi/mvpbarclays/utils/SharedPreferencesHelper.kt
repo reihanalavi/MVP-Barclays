@@ -1,4 +1,4 @@
-package com.reihanalavi.mvpbarclays.room
+package com.reihanalavi.mvpbarclays.utils
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -12,14 +12,16 @@ class SharedPreferencesHelper {
         private const val PREF_TIME = "PREF_TIME"
         private var prefs: SharedPreferences? = null
 
-        @Volatile private var instance: SharedPreferencesHelper? = null
+        @Volatile
+        private var instance: SharedPreferencesHelper? = null
         private val LOCK = Any()
 
-        operator fun invoke(context: Context): SharedPreferencesHelper = instance ?: synchronized(LOCK) {
-            instance ?: buildHelper(context).also {
-                instance = it
+        operator fun invoke(context: Context): SharedPreferencesHelper =
+            instance ?: synchronized(LOCK) {
+                instance ?: buildHelper(context).also {
+                    instance = it
+                }
             }
-        }
 
         private fun buildHelper(context: Context): SharedPreferencesHelper {
             prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -35,5 +37,4 @@ class SharedPreferencesHelper {
     }
 
     fun getUpdateTime() = prefs?.getLong(PREF_TIME, 0)
-
 }
