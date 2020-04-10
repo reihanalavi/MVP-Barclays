@@ -18,11 +18,16 @@ Learn API Integration using Retrofit2, RxJava, and MVP Design Pattern
 4. 5/04/2020
    - Fourth commit
    - fixing unshowed responses in list
-   -adding detail view
+   - adding detail view
 
 5. 6/04/2020
    - Fifth commit
-   - Adding Room, android Jetpack Library for caching the retrieved data from the server to the database locally
+   - Implement Room for MainActivity
+
+6. 7/04/2020
+   - Sixth commit
+   - Adding Room for DetailActivity
+   - Implement Data Binding
 
 ## This Project uses
 
@@ -31,4 +36,4 @@ Learn API Integration using Retrofit2, RxJava, and MVP Design Pattern
 
 - [x] Retrofit2
 - [x] RxJava
-- [x] Room Jetpack Library
+- [x] Jetpack Library (Room, Data Binding)
