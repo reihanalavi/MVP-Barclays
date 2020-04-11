@@ -28,6 +28,12 @@ Learn API Integration using Retrofit2, RxJava, and MVP Design Pattern
    - Sixth commit
    - Adding Room for DetailActivity
    - Implement Data Binding
+   
+7. 10/04/2020
+   - Seventh commit
+   - Adding Bottom Navigation
+   - Adding SearchView in TeamsListFragment
+   - Implement Navigation
 
 ## This Project uses
 
@@ -36,4 +42,4 @@ Learn API Integration using Retrofit2, RxJava, and MVP Design Pattern
 
 - [x] Retrofit2
 - [x] RxJava
-- [x] Jetpack Library (Room, Data Binding)
+- [x] Jetpack Library (Room, Data Binding, Navigation)
