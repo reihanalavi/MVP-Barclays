@@ -12,10 +12,10 @@ interface ApiRepository {
     @GET("api/v1/json/1/search_all_teams.php")
     fun getTeams(@Query ("l") league: String): Observable<TeamsResponse>
 
-
     //PAST EVENTS (18/19)
     @GET("api/v1/json/1/eventsround.php")
     fun getPasts(@Query ("id") idEvent: String,
+                 @Query ("r") round: String,
                  @Query ("s") season: String) : Observable<PastsResponse>
 
     @GET("api/v1/json/1/lookupevent.php")

@@ -26,7 +26,7 @@ class TeamsListPresenter(val view: TeamsListView, var apiRepository: ApiReposito
     private var refreshTime = 10 * 60 * 1000 * 1000 * 1000L
 
     fun refresh(league: String) {
-        val updateTime = prefHelper.getUpdateTime()
+        val updateTime = prefHelper.getUpdateTime("teams")
         if(updateTime != null && updateTime != 0L && System.nanoTime() - updateTime < refreshTime) {
             getTeamsFromDatabase()
         } else {
@@ -71,7 +71,6 @@ class TeamsListPresenter(val view: TeamsListView, var apiRepository: ApiReposito
     fun getTeamsFromServer(league: String, context: Context) {
         view.showLoading()
 
-        debug { apiRepository.getTeams(league) }
         compositeDisposable = CompositeDisposable()
 
         compositeDisposable.add(
@@ -89,6 +88,8 @@ class TeamsListPresenter(val view: TeamsListView, var apiRepository: ApiReposito
                 {
                     view.hideLoading()
                     view.onError(it.message!!)
+
+                    getTeamsFromDatabase()
 
                     it.printStackTrace()
                 })
@@ -117,7 +118,7 @@ class TeamsListPresenter(val view: TeamsListView, var apiRepository: ApiReposito
             }
             retrieveTeams(responses)
         }
-        prefHelper.saveUpdateTime(System.nanoTime())
+        prefHelper.saveUpdateTime("teams", System.nanoTime())
     }
 
     override fun onCleared() {

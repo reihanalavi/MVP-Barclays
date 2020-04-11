@@ -9,7 +9,6 @@ class SharedPreferencesHelper {
 
     companion object {
 
-        private const val PREF_TIME = "PREF_TIME"
         private var prefs: SharedPreferences? = null
 
         @Volatile
@@ -30,11 +29,11 @@ class SharedPreferencesHelper {
 
     }
 
-    fun saveUpdateTime(time: Long) {
+    fun saveUpdateTime(key: String, time: Long) {
         prefs?.edit(commit = true) {
-            putLong(PREF_TIME, time)
+            putLong(key, time)
         }
     }
 
-    fun getUpdateTime() = prefs?.getLong(PREF_TIME, 0)
+    fun getUpdateTime(key: String) = prefs?.getLong(key, 0)
 }

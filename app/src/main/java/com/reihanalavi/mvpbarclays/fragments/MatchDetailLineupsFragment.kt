@@ -10,54 +10,55 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 
 import com.reihanalavi.mvpbarclays.R
-import com.reihanalavi.mvpbarclays.databinding.FragmentTeamsListDetailBinding
-import com.reihanalavi.mvpbarclays.models.Teams
-import com.reihanalavi.mvpbarclays.presenters.TeamsListDetailPresenter
-import com.reihanalavi.mvpbarclays.views.TeamsListDetailView
+import com.reihanalavi.mvpbarclays.databinding.FragmentMatchDetailLineupsBindingImpl
+import com.reihanalavi.mvpbarclays.models.Pasts
+import com.reihanalavi.mvpbarclays.presenters.MatchLineupPresenter
+import com.reihanalavi.mvpbarclays.views.MatchLineupView
 import com.reihanalavi.mvpbarclays.webservices.ApiRepository
 import com.reihanalavi.mvpbarclays.webservices.RetrofitBuilder
-import kotlinx.android.synthetic.main.fragment_teams_list_detail.view.*
 import org.jetbrains.anko.AnkoLogger
 import retrofit2.Retrofit
 
 /**
  * A simple [Fragment] subclass.
  */
-class TeamsListDetailFragment : Fragment(), TeamsListDetailView, AnkoLogger {
+class MatchDetailLineupsFragment : Fragment(), MatchLineupView, AnkoLogger {
 
-    var teamUid: Int = 0
-    lateinit var dataBinding: FragmentTeamsListDetailBinding
+    var pastUid: Int? = 0
 
     lateinit var retrofit: Retrofit
     lateinit var apiRepository: ApiRepository
-    lateinit var presenter: TeamsListDetailPresenter
+    lateinit var presenter: MatchLineupPresenter
+    lateinit var application: Application
+
+    lateinit var dataBinding: FragmentMatchDetailLineupsBindingImpl
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_teams_list_detail, container, false)
+        dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_match_detail_lineups, container, false)
         return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val application = Application()
+        arguments?.let {
+            pastUid = it.getInt("lineups")
+        }
 
         retrofit = RetrofitBuilder.getRetrofit()
         apiRepository = retrofit.create(ApiRepository::class.java)
+        application = Application()
+        presenter = MatchLineupPresenter(this, apiRepository, application)
 
-        presenter = TeamsListDetailPresenter(this, apiRepository, application)
+        presenter.getPastDetailsFromDatabase(pastUid)
 
-        arguments?.let {
-            teamUid = TeamsListDetailFragmentArgs.fromBundle(it).teamUid
-            presenter.getTeamDetailsFromDatabase(teamUid)
-        }
+        Log.d("LINEUPS PAST UID", pastUid.toString())
+
     }
-
-
 
     override fun showLoading() {
 
@@ -72,12 +73,14 @@ class TeamsListDetailFragment : Fragment(), TeamsListDetailView, AnkoLogger {
     }
 
     override fun onError(error: String) {
-        Log.d("ERROR TEAM DETAIL", error)
+        Log.d("ERROR LINEUPS", error)
     }
 
-    override fun onResult(data: Teams?) {
-        dataBinding.teams = data
+    override fun onResult(data: Pasts?, homeForm: String?, awayForm: String?) {
+        dataBinding.pasts = data
 
-        activity?.title = dataBinding.teams?.strTeam.toString()
+        dataBinding.homeForm = homeForm
+        dataBinding.awayForm = awayForm
+
     }
 }

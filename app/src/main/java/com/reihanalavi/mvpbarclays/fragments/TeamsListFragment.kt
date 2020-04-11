@@ -1,5 +1,6 @@
 package com.reihanalavi.mvpbarclays.fragments
 
+import android.app.ActionBar
 import android.app.Application
 import android.os.Bundle
 import android.util.Log
@@ -8,10 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.reihanalavi.mvpbarclays.R
-import com.reihanalavi.mvpbarclays.activities.DetailActivity
 import com.reihanalavi.mvpbarclays.adapters.TeamsAdapter
 import com.reihanalavi.mvpbarclays.models.Teams
 import com.reihanalavi.mvpbarclays.presenters.TeamsListPresenter
@@ -20,8 +21,6 @@ import com.reihanalavi.mvpbarclays.webservices.ApiRepository
 import com.reihanalavi.mvpbarclays.webservices.RetrofitBuilder
 import kotlinx.android.synthetic.main.fragment_teams_list.view.*
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.support.v4.defaultSharedPreferences
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.toast
 import retrofit2.Retrofit
@@ -50,6 +49,8 @@ class TeamsListFragment : Fragment(), TeamsListView, AnkoLogger {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        activity?.title = "Teams"
+
         val application = Application()
         val viewContext = view.context
 
@@ -61,7 +62,10 @@ class TeamsListFragment : Fragment(), TeamsListView, AnkoLogger {
         adapter = TeamsAdapter(viewContext, teams) {
             Log.d("UID DATABASE ITEM", it.uid.toString())
 
-            view.context.startActivity<DetailActivity>("isLocal" to true, "id" to it.uid)
+            val action = TeamsListFragmentDirections.teamsListToTeamsDetail()
+            action.teamUid = it.uid
+            Navigation.findNavController(view).navigate(action)
+
         }
         adapter.notifyDataSetChanged()
         view.recyclerView_fragment_teams.adapter = adapter
@@ -123,7 +127,7 @@ class TeamsListFragment : Fragment(), TeamsListView, AnkoLogger {
     }
 
     override fun onError(error: String) {
-        Log.d("ERROR GAIS", error)
+        Log.d("ERROR TEAMS LIST", error)
     }
 
     override fun onResult(data: List<Teams>?) {

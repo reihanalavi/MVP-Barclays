@@ -19,4 +19,19 @@
     <string name="past_list_detail">Past List Detail</string>
     <string name="past_list">Past List</string>
     <string name="x">X</string>
+    <string name="title_activity_tabbed">TabbedActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="overview_tab">Overview Tab</string>
+    <string name="lineups_tab">Lineups Tab</string>
+    <string name="goal_s">Goal(s)</string>
+    <string name="shot_s">Shot(s)</string>
+    <string name="red_card_s">Red Card(s)</string>
+    <string name="yellow_card_s">Yellow Card(s)</string>
+    <string name="goalkeeper">Goalkeeper</string>
+    <string name="defense">Defense</string>
+    <string name="midfield">Midfield</string>
+    <string name="forward">Forward</string>
+    <string name="substitutes">Substitutes</string>
+    <string name="formation">Formation</string>
 </resources>

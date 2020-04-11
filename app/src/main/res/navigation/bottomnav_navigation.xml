@@ -8,17 +8,17 @@
     <fragment
         android:id="@+id/teamsListFragment"
         android:name="com.reihanalavi.mvpbarclays.fragments.TeamsListFragment"
-        android:label="TeamsListFragment"
         tools:layout="@layout/fragment_teams_list">
         <action
             android:id="@+id/teamsListToTeamsDetail"
-            app:destination="@id/teamsListDetailFragment" />
+            app:destination="@id/teamsListDetailFragment"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:exitAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/pastListFragment"
         android:name="com.reihanalavi.mvpbarclays.fragments.PastListFragment"
-        android:label="PastListFragment"
-        tools:layout="@layout/fragment_past_list" >
+        tools:layout="@layout/fragment_past_list">
         <action
             android:id="@+id/pastListToPastDetail"
             app:destination="@id/pastListDetailFragment" />
@@ -26,7 +26,6 @@
     <fragment
         android:id="@+id/nextListFagment"
         android:name="com.reihanalavi.mvpbarclays.fragments.NextListFagment"
-        android:label="NextListFragment"
         tools:layout="@layout/fragment_next_list_fagment" >
         <action
             android:id="@+id/nextListToNextDetail"
@@ -35,11 +34,24 @@
     <fragment
         android:id="@+id/pastListDetailFragment"
         android:name="com.reihanalavi.mvpbarclays.fragments.PastListDetailFragment"
-        android:label="PastListDetailFragment"
-        tools:layout="@layout/fragment_past_list_detail" >
+        tools:layout="@layout/fragment_past_list_detail">
         <action
             android:id="@+id/pastDetailToTeamsDetail"
             app:destination="@id/teamsListDetailFragment" />
+        <argument
+            android:name="pastUid"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="titlebar"
+            app:argType="string"
+            android:defaultValue=""/>
+        <action
+            android:id="@+id/pastDetailToOverview"
+            app:destination="@id/matchDetailOverviewFragment" />
+        <action
+            android:id="@+id/pastDetailToLineups"
+            app:destination="@id/matchDetailLineupsFragment" />
     </fragment>
     <fragment
         android:id="@+id/nextListDetailFragment"
@@ -49,10 +61,48 @@
         <action
             android:id="@+id/nextDetailToTeamsDetail"
             app:destination="@id/teamsListDetailFragment" />
+        <argument
+            android:name="nextUid"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/teamsListDetailFragment"
         android:name="com.reihanalavi.mvpbarclays.fragments.TeamsListDetailFragment"
-        android:label="TeamsListDetailFragment"
-        tools:layout="@layout/fragment_teams_list_detail" />
+        tools:layout="@layout/fragment_teams_list_detail">
+
+        <action
+            android:id="@+id/teamDetailToTeamList"
+            app:destination="@id/teamsListFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right" />
+        <argument
+            android:name="teamUid"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="titlebar"
+            app:argType="string"
+            android:defaultValue=""/>
+    </fragment>
+    <fragment
+        android:id="@+id/matchDetailLineupsFragment"
+        android:name="com.reihanalavi.mvpbarclays.fragments.MatchDetailLineupsFragment"
+        android:label="fragment_match_detail_lineups"
+        tools:layout="@layout/fragment_match_detail_lineups" >
+        <argument
+            android:name="pastUid"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/matchDetailOverviewFragment"
+        android:name="com.reihanalavi.mvpbarclays.fragments.MatchDetailOverviewFragment"
+        android:label="fragment_match_detail_overview"
+        tools:layout="@layout/fragment_match_detail_overview" >
+        <argument
+            android:name="pastUid"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>

@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat
 object DateParser {
 
     @SuppressLint("SimpleDateFormat")
-    private fun formatDate(date: String, format: String): String {
+    private fun formatLongDate(date: String, format: String): String {
         var result = ""
 
         val oldDate = SimpleDateFormat("yyyy-MM-dd")
@@ -16,6 +16,7 @@ object DateParser {
             val newFormat = SimpleDateFormat(format)
             result = newFormat.format(old)
         } catch (e: ParseException) {
+            result = date
             e.printStackTrace()
         }
 
@@ -23,7 +24,7 @@ object DateParser {
     }
 
     fun getLongDate(date: String): String {
-        return formatDate(date, "EEEE, dd MMMM yyyy")
+        return formatLongDate(date, "EEEE, dd MMMM yyyy")
     }
 
 }

@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragments.MatchDetailOverviewFragment">
+
+    <data>
+        <import type="android.text.TextUtils"/>
+        <variable
+            name="pasts"
+            type="com.reihanalavi.mvpbarclays.models.Pasts" />
+        <variable
+            name="home"
+            type="com.reihanalavi.mvpbarclays.models.Teams" />
+        <variable
+            name="away"
+            type="com.reihanalavi.mvpbarclays.models.Teams" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E8EAF6">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout_overview_first"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:padding="16dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView_overview_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:text='@{(TextUtils.isEmpty(pasts.intHomeScore) ? "0" : pasts.intHomeScore) + " - " + (TextUtils.isEmpty(pasts.intAwayScore) ? "0" : pasts.intAwayScore)}'
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="2 - 1" />
+
+                <ImageView
+                    android:id="@+id/imageView_overview_homeBadge"
+                    android:layout_width="75dp"
+                    android:imageUrl="@{home.strTeamBadge}"
+                    android:layout_height="75dp"
+                    app:layout_constraintEnd_toStartOf="@id/textView_overview_score"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:background="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/textView_overview_homeTeam"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:textAlignment="center"
+                    android:text="@{pasts.strHomeTeam}"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toStartOf="@id/textView_overview_score"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageView_overview_homeBadge"
+                    tools:text="Arsenal" />
+
+                <ImageView
+                    android:id="@+id/imageView_overview_awayBadge"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:imageUrl="@{away.strTeamBadge}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/textView_overview_score"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:background="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/textView_overview_awayTeam"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:textAlignment="center"
+                    android:text="@{pasts.strAwayTeam}"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/textView_overview_score"
+                    app:layout_constraintTop_toBottomOf="@id/imageView_overview_awayBadge"
+                    tools:text="Arsenal" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout_overview_second"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:padding="16dp"
+                app:layout_constraintTop_toBottomOf="@id/constraintLayout_overview_first">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout_overview_secondFirst"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent">
+                    <TextView
+                        android:id="@+id/textView_overview_goals"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/goal_s"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView_overview_homeGoals"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textStart"
+                        android:textColor="@android:color/black"
+                        android:layout_marginEnd="10dp"
+                        android:text='@{(TextUtils.isEmpty(pasts.strHomeGoalDetails) ? "-" : pasts.strHomeGoalDetails.replace(";", "\n\n").replace(":",":\n"))}'
+                        app:layout_constraintEnd_toStartOf="@id/textView_overview_goals"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="61':\nLoren Moron\n\n75':\nJese Rodriguez\n\n" />
+
+                    <TextView
+                        android:id="@+id/textView_overview_awayGoals"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:textColor="@android:color/black"
+                        android:layout_marginStart="10dp"
+                        android:text='@{(TextUtils.isEmpty(pasts.strAwayGoalDetails) ? "-" : pasts.strAwayGoalDetails.replace(";", "\n\n").replace(":",":\n"))}'
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/textView_overview_goals"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="61':Loren Moron\n75':Jese Rodriguez\n" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout_overview_secondSecond"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/constraintLayout_overview_secondFirst">
+                    <TextView
+                        android:id="@+id/textView_overview_shots"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shot_s"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView_overview_homeShots"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textStart"
+                        android:textColor="@android:color/black"
+                        android:layout_marginEnd="10dp"
+                        android:text='@{(TextUtils.isEmpty(pasts.intHomeShots) ? "-" : pasts.intHomeShots)}'
+                        app:layout_constraintEnd_toStartOf="@id/textView_overview_shots"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="7" />
+
+                    <TextView
+                        android:id="@+id/textView_overview_awayShots"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:textColor="@android:color/black"
+                        android:layout_marginStart="10dp"
+                        android:text='@{(TextUtils.isEmpty(pasts.intAwayShots) ? "-" : pasts.intAwayShots)}'
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/textView_overview_shots"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="2" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout_overview_third"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/white"
+                android:padding="16dp"
+                app:layout_constraintTop_toBottomOf="@id/constraintLayout_overview_second">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout_overview_thirdFirst"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent">
+                    <TextView
+                        android:id="@+id/textView_overview_redcards"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/red_card_s"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView_overview_homeRedCards"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textStart"
+                        android:textColor="@android:color/black"
+                        android:layout_marginEnd="10dp"
+                        android:text='@{(TextUtils.isEmpty(pasts.strHomeRedCards) ? "-" : pasts.strHomeRedCards.replace(";", "\n\n").replace(":",":\n"))}'
+                        app:layout_constraintEnd_toStartOf="@id/textView_overview_redcards"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="61':Loren Moron\n75':Jese Rodriguez\n" />
+
+                    <TextView
+                        android:id="@+id/textView_overview_awayRedCards"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:textColor="@android:color/black"
+                        android:layout_marginStart="10dp"
+                        android:text='@{(TextUtils.isEmpty(pasts.strAwayRedCards) ? "-" : pasts.strAwayRedCards.replace(";", "\n\n").replace(":",":\n"))}'
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/textView_overview_redcards"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="61':Loren Moron\n75':Jese Rodriguez\n" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout_overview_thirdSecond"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/constraintLayout_overview_thirdFirst">
+                    <TextView
+                        android:id="@+id/textView_overview_yellowCards"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/yellow_card_s"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView_overview_homeYellowCards"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textStart"
+                        android:textColor="@android:color/black"
+                        android:layout_marginEnd="10dp"
+                        android:text='@{(TextUtils.isEmpty(pasts.strHomeYellowCards) ? "-" : pasts.strHomeYellowCards.replace(";", "\n\n").replace(":",":\n"))}'
+                        app:layout_constraintEnd_toStartOf="@id/textView_overview_yellowCards"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="31':Wilfrid Kaptoum\n" />
+
+                    <TextView
+                        android:id="@+id/textView_overview_awayYellowCards"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="textEnd"
+                        android:textColor="@android:color/black"
+                        android:layout_marginStart="10dp"
+                        android:text='@{(TextUtils.isEmpty(pasts.strAwayYellowCards) ? "-" : pasts.strAwayYellowCards.replace(";", "\n\n").replace(":",":\n"))}'
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/textView_overview_yellowCards"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="31':Wilfrid Kaptoum\n" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

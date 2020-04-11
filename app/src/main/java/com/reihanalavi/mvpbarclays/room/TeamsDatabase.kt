@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.reihanalavi.mvpbarclays.models.Pasts
 import com.reihanalavi.mvpbarclays.models.Teams
 
-@Database(entities = [Teams::class, Pasts::class], version = 1)
+@Database(entities = [Teams::class, Pasts::class], version = 2)
 abstract class TeamsDatabase: RoomDatabase() {
 
     abstract fun teamsDao(): TeamsDao
@@ -28,7 +28,9 @@ abstract class TeamsDatabase: RoomDatabase() {
             context,
             TeamsDatabase::class.java,
             "teamsdatabase"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
 
     }
 

@@ -1,13 +1,15 @@
 package com.reihanalavi.mvpbarclays.views
 
+import com.reihanalavi.mvpbarclays.models.Pasts
 import com.reihanalavi.mvpbarclays.models.Teams
 
-interface DetailView {
+interface MatchOverviewView {
 
     fun showLoading()
     fun hideLoading()
     fun onAlert(message: String, title: String)
     fun onError(error: String)
-    fun onResult(data: Teams?)
+    fun onResultOverview(data: Pasts?)
+    fun onResultTeam(data: Teams?, side: String)
 
 }

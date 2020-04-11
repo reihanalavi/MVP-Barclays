@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.reihanalavi.mvpbarclays.R
 import com.reihanalavi.mvpbarclays.databinding.ItemsPastBinding
 import com.reihanalavi.mvpbarclays.models.Pasts
+import com.smansara.tugasque.utils.DateParser
 import org.jetbrains.anko.sdk25.coroutines.onClick
+import java.text.SimpleDateFormat
 
 class PastsAdapter(
     private val context: Context,
@@ -20,7 +22,9 @@ class PastsAdapter(
     class ViewHolder(private val itemViews: ItemsPastBinding): RecyclerView.ViewHolder(itemViews.root) {
 
         fun bindData(data: Pasts, listener: (Pasts) -> Unit) {
+
             itemViews.pasts = data
+            itemViews.pasts?.dateEvent = DateParser.getLongDate(data.dateEvent.toString())
 
             itemView.onClick {
                 listener(data)
