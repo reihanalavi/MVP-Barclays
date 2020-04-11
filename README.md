@@ -34,6 +34,13 @@ Learn API Integration using Retrofit2, RxJava, and MVP Design Pattern
    - Adding Bottom Navigation
    - Adding SearchView in TeamsListFragment
    - Implement Navigation
+   
+8. 11/04/2020
+   - Eighth commit
+   - Adding new menu : Past Matches
+   - Adding Room for Past Matches
+   - Adding title bar custom
+   - Bug on searcview Team List
 
 ## This Project uses
 
